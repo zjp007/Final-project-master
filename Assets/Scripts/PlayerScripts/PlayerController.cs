@@ -89,13 +89,15 @@ namespace PlayerScripts
         {
             if (!isDead && !_isFinish && !GameStatusController.IsGameFinish)
             {
-                if (Input.GetKeyDown(KeyCode.Space) && GameStatusController.IsFirePlayer)
+                // K键 攻击/发射火球
+                if (Input.GetKeyDown(KeyCode.K) && GameStatusController.IsFirePlayer)
                 {
                     Instantiate(fireBallPrefab, fireBallParent.position, fireBallParent.rotation);
                     _playerAudio.PlayOneShot(fireballSound);
                 }
 
-                if (Input.GetKeyDown(KeyCode.A) && _isOnGround)
+                // W键 跳跃
+                if (Input.GetKeyDown(KeyCode.W) && _isOnGround)
                 {
                     _playerAudio.PlayOneShot(GameStatusController.IsBigPlayer ? jumpSound : jumpBigSound);
                     _isOnGround = false;
@@ -108,19 +110,20 @@ namespace PlayerScripts
 
                 DenyMidAirJump();
 
-                if (Input.GetKeyDown(KeyCode.S))
+                // J键 加速
+                if (Input.GetKeyDown(KeyCode.J))
                 {
                     speed = 600;
                     jumpForce = 1160;
                 }
-
-                else if (Input.GetKeyUp(KeyCode.S))
+                else if (Input.GetKeyUp(KeyCode.J))
                 {
                     speed = 410;
                     jumpForce = 1030;
                 }
 
-                if (Input.GetKeyDown(KeyCode.DownArrow) && _isAboveSpecialPipe)
+                // S键 下特殊水管
+                if (Input.GetKeyDown(KeyCode.S) && _isAboveSpecialPipe)
                 {
                     _isAboveSpecialPipe = false;
                     _playerAudio.PlayOneShot(pipeSound);
@@ -129,7 +132,8 @@ namespace PlayerScripts
                     StartCoroutine(StopGoingDownPipe());
                 }
 
-                if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.DownArrow))
+                // D键 向右移动
+                if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.S))
                 {
                     if (!_isFacingRight)
                     {
@@ -138,7 +142,8 @@ namespace PlayerScripts
                     }
                 }
 
-                if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.DownArrow))
+                // A键 向左移动
+                if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S))
                 {
                     if (_isFacingRight)
                     {
@@ -244,7 +249,8 @@ namespace PlayerScripts
 
         private void MovePlayer()
         {
-            if (!Input.GetKey(KeyCode.DownArrow) && !_isGoingDownPipeAble)
+            // S键未按下时允许水平移动
+            if (!Input.GetKey(KeyCode.S) && !_isGoingDownPipeAble)
             {
                 var horizontalInput = Input.GetAxisRaw("Horizontal");
                 Vector2 playerVelocity = _playerRb.velocity;
@@ -252,19 +258,21 @@ namespace PlayerScripts
                 _playerRb.velocity = Vector3.SmoothDamp(playerVelocity, targetVelocity, ref _velocity, smoothTime);
             }
 
-            if (Input.GetKey(KeyCode.DownArrow) && (CompareTag("BigPlayer") || CompareTag("UltimateBigPlayer")) &&
-                !_isAboveSpecialPipe)
+            // 修复蹲下状态卡死：通过 if-else 判定确立唯一状态，防止松开按键判定漏帧
+            if (CompareTag("BigPlayer") || CompareTag("UltimateBigPlayer"))
             {
-                _playerAnim.SetBool(CrouchB, true);
-                smallPlayerCollider.SetActive(true);
-                bigPlayerCollider.SetActive(false);
-            }
-            else if (Input.GetKeyUp(KeyCode.DownArrow) &&
-                     (CompareTag("BigPlayer") || CompareTag("UltimateBigPlayer")) && !_isAboveSpecialPipe)
-            {
-                _playerAnim.SetBool(CrouchB, false);
-                smallPlayerCollider.SetActive(false);
-                bigPlayerCollider.SetActive(true);
+                if (Input.GetKey(KeyCode.S) && !_isAboveSpecialPipe)
+                {
+                    _playerAnim.SetBool(CrouchB, true);
+                    // smallPlayerCollider.SetActive(true);
+                    // bigPlayerCollider.SetActive(false);
+                }
+                else
+                {
+                    _playerAnim.SetBool(CrouchB, false);
+                    // smallPlayerCollider.SetActive(false);
+                    // bigPlayerCollider.SetActive(true);
+                }
             }
         }
 

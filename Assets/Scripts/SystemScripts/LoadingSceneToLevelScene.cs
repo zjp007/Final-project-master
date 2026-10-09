@@ -39,11 +39,26 @@ namespace SystemScripts
             }
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         private static IEnumerator LevelScene()
         {
             yield return new WaitForSeconds(2);
-            SceneManager.LoadScene(GameStatusController.CurrentLevel);
-            GameStatusController.CurrentLevel += 1;
+    
+            // 获取当前需要加载的场景索引
+            int targetLevelIndex = GameStatusController.CurrentLevel;
+
+            // 检查目标索引是否超出了 Build Settings 中已添加的场景总数
+            if (targetLevelIndex < SceneManager.sceneCountInBuildSettings)
+            {
+                SceneManager.LoadScene(targetLevelIndex);
+                GameStatusController.CurrentLevel += 1;
+            }
+            else
+            {
+                // 如果已经没有下一关，强制返回主菜单（假设主菜单的 Build Index 是 0）
+                Debug.LogWarning("已通关所有关卡，返回主菜单！");
+                SceneManager.LoadScene(0); 
+            }
         }
 
         private static IEnumerator RepeatLevelScene()

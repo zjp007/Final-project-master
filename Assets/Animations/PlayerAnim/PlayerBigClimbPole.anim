@@ -7,7 +7,7 @@ AnimationClip:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PlayerBigClimbPole
-  serializedVersion: 6
+  serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
   m_UseHighQualityCurve: 1
@@ -18,20 +18,19 @@ AnimationClip:
   m_ScaleCurves: []
   m_FloatCurves: []
   m_PPtrCurves:
-  - curve:
+  - serializedVersion: 2
+    curve:
     - time: 0
-      value: {fileID: 7565877224362775616, guid: 9a569984145514a2bb2802ef51df788b,
-        type: 3}
+      value: {fileID: 21300000, guid: de6507ea29950b04cb1c1fa23cf94dd0, type: 3}
     - time: 0.05
-      value: {fileID: 2243496752862105744, guid: 9a569984145514a2bb2802ef51df788b,
-        type: 3}
+      value: {fileID: 21300000, guid: 7b78909b8a1843d46b705604543b41f3, type: 3}
     - time: 0.1
-      value: {fileID: 7565877224362775616, guid: 9a569984145514a2bb2802ef51df788b,
-        type: 3}
+      value: {fileID: 21300000, guid: de6507ea29950b04cb1c1fa23cf94dd0, type: 3}
     attribute: m_Sprite
     path: Animations/BigMarioAnimations
     classID: 212
     script: {fileID: 0}
+    flags: 2
   m_SampleRate: 60
   m_WrapMode: 0
   m_Bounds:
@@ -46,10 +45,12 @@ AnimationClip:
       typeID: 212
       customType: 23
       isPPtrCurve: 1
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 7565877224362775616, guid: 9a569984145514a2bb2802ef51df788b, type: 3}
-    - {fileID: 2243496752862105744, guid: 9a569984145514a2bb2802ef51df788b, type: 3}
-    - {fileID: 7565877224362775616, guid: 9a569984145514a2bb2802ef51df788b, type: 3}
+    - {fileID: 21300000, guid: de6507ea29950b04cb1c1fa23cf94dd0, type: 3}
+    - {fileID: 21300000, guid: 7b78909b8a1843d46b705604543b41f3, type: 3}
+    - {fileID: 21300000, guid: de6507ea29950b04cb1c1fa23cf94dd0, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
